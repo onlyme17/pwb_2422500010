@@ -1,0 +1,10 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<main class="container-site" id="produk">
+<div class="section-title"><div><p class="muted" style="margin:0 0 6px">PILIHAN UNTUK ANDA</p><h2>Produk Kami</h2><?php if (!empty($keyword)): ?><p class="muted">Hasil pencarian: "<?php echo html_escape($keyword); ?>" · <a href="<?php echo base_url(); ?>">Hapus pencarian</a></p><?php endif; ?></div><span class="muted"><?php echo count($list_produk); ?> produk tersedia</span></div>
+<?php if ($this->session->flashdata('message')): ?><div class="alert"><?php echo html_escape($this->session->flashdata('message')); ?></div><?php endif; ?>
+<?php if (empty($list_produk)): ?><p class="muted">Belum ada produk yang tersedia.</p><?php else: ?>
+<div class="product-grid">
+<?php foreach ($list_produk as $produk): $foto = !empty($gambar_produk[$produk['id_produk']]) ? $gambar_produk[$produk['id_produk']][0]['nama_gambar'] : ''; ?>
+<article class="product-card"><div class="product-image"><?php if ($foto && is_file(FCPATH.'uploads/produk/'.$foto)): ?><img src="<?php echo base_url('uploads/produk/'.rawurlencode($foto)); ?>" alt="<?php echo html_escape($produk['pd_nama']); ?>"><?php else: ?><span class="muted">Gambar produk belum tersedia</span><?php endif; ?></div><div class="product-info"><span class="pill"><?php echo html_escape($produk['kt_nama']); ?></span><h3 style="margin-top:12px"><?php echo html_escape($produk['pd_nama']); ?></h3><p class="muted" style="font-size:13px;line-height:1.5"><?php echo html_escape(character_limiter(strip_tags($produk['deskripsi']), 85)); ?></p><div class="price">Rp <?php echo number_format((float)$produk['harga'], 0, ',', '.'); ?></div><small class="muted">Stok: <?php echo (int)$produk['stok']; ?></small><p style="margin:12px 0 0"><a class="btn-shop" style="padding:8px 12px;font-size:13px" href="<?php echo base_url('keranjang/tambah/'.$produk['id_produk']); ?>">Tambah ke Keranjang</a></p></div></article>
+<?php endforeach; ?></div><?php endif; ?>
+</main>

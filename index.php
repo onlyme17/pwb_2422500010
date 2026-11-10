@@ -40,7 +40,7 @@
  * APPLICATION ENVIRONMENT
  *---------------------------------------------------------------
  */
-define('ENVIRONMENT', 'production');
+define('ENVIRONMENT', 'development');
 
 /*
  *---------------------------------------------------------------
@@ -50,7 +50,9 @@ define('ENVIRONMENT', 'production');
 switch (ENVIRONMENT)
 {
     case 'development':
-        error_reporting(-1);
+        // CodeIgniter 3 menghasilkan dynamic-property deprecation pada PHP 8.2+.
+        // Sembunyikan deprecation agar output tidak mendahului inisialisasi session.
+        error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
         ini_set('display_errors', 1);
         break;
 

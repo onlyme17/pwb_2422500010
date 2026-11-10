@@ -32,7 +32,7 @@ $autoload['drivers'] = array();
 |  Auto-load Helper Files
 | -------------------------------------------------------------------
 */
-$autoload['helper'] = array('url', 'file', 'admin_login');
+$autoload['helper'] = array('url', 'file', 'form', 'text', 'admin_login');
 
 /*
 | -------------------------------------------------------------------

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 19, 2026 at 02:26 PM
+-- Generation Time: Nov 10, 2026
 -- Server version: 8.4.3
 -- PHP Version: 8.3.33
 
@@ -32,7 +32,7 @@ CREATE TABLE `administrator` (
   `full_name` varchar(40) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `administrator`
@@ -53,7 +53,7 @@ CREATE TABLE `kategori` (
   `id_kategori` int NOT NULL,
   `nama` varchar(100) NOT NULL,
   `deskripsi` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `kategori`
@@ -72,7 +72,7 @@ INSERT INTO `kategori` (`id_kategori`, `nama`, `deskripsi`) VALUES
 CREATE TABLE `keranjang` (
   `id_keranjang` int NOT NULL,
   `pelanggan_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,7 @@ CREATE TABLE `keranjang_produk` (
   `keranjang_id` int NOT NULL,
   `produk_id` int NOT NULL,
   `jumlah` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -95,11 +95,15 @@ CREATE TABLE `keranjang_produk` (
 
 CREATE TABLE `pelanggan` (
   `id_pelanggan` int NOT NULL,
-  `nama` varchar(100) NOT NULL,
+  `nama_pelanggan` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `telepon` varchar(20) DEFAULT NULL,
-  `alamat` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `password` varchar(255) DEFAULT NULL,
+  `telp_pelanggan` varchar(20) DEFAULT NULL,
+  `alamat` text,
+  `kota` varchar(100) DEFAULT NULL,
+  `kode_pos` varchar(10) DEFAULT NULL,
+  `provinsi` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -114,7 +118,7 @@ CREATE TABLE `pembayaran` (
   `bukti` varchar(255) DEFAULT NULL,
   `tanggal` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` varchar(50) NOT NULL DEFAULT 'menunggu'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -128,7 +132,7 @@ CREATE TABLE `pesanan` (
   `tanggal` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `total` int NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'baru'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -142,7 +146,7 @@ CREATE TABLE `pesanan_produk` (
   `produk_id` int NOT NULL,
   `jumlah` int NOT NULL,
   `harga` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -157,7 +161,7 @@ CREATE TABLE `produk` (
   `kategori_id` int NOT NULL,
   `harga` int NOT NULL,
   `stok` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `produk`
@@ -176,7 +180,7 @@ CREATE TABLE `produk_gambar` (
   `id_gambar` int NOT NULL,
   `nama_gambar` varchar(100) DEFAULT NULL,
   `produk_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `produk_gambar`
@@ -221,7 +225,8 @@ ALTER TABLE `keranjang_produk`
 -- Indexes for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  ADD PRIMARY KEY (`id_pelanggan`);
+  ADD PRIMARY KEY (`id_pelanggan`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `pembayaran`

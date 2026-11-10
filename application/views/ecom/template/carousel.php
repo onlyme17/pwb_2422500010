@@ -1,0 +1,2 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<section class="container-site" style="padding-bottom:0"><div class="hero"><div class="hero-content"><span class="pill" style="background:rgba(255,255,255,.18);color:white">KOLEKSI PILIHAN</span><h1>Temukan Gaya Terbaikmu</h1><p>Pilihan produk untuk melengkapi kebutuhan dan gaya sehari-hari. Jelajahi koleksi yang tersedia di Sahabat Store.</p><a class="btn-shop" href="#produk">Lihat Semua Produk</a></div></div></section>

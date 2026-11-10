@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
   <footer class="main-footer">
     <div class="float-right d-none d-sm-inline">Pemrograman Web Bisnis</div>
-    <strong>Copyright &copy; <?php echo date('Y'); ?> Delphi Pet Shop</strong>
+    <strong>Copyright &copy; <?php echo date('Y'); ?> ADITYA IRFANZA PET SHOP</strong>
   </footer>
 </div>
 <script src="<?php echo base_url('assets/plugins/jquery/jquery.min.js'); ?>"></script>

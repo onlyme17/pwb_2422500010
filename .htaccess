@@ -1,4 +1,10 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php/$1 [L]
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Paksa URL admin masuk ke router CodeIgniter, walaupun ada folder fisik bernama admin.
+    RewriteRule ^admin(?:/.*)?$ index.php/$0 [L,QSA]
+
+    # URL lain yang bukan file fisik diteruskan ke CodeIgniter.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+</IfModule>
