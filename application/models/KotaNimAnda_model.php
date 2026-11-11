@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class KotaNimAnda_model extends CI_Model
 {
-    // Nama tabel dan kolom sesuai database project pwb_2422500010.
     private $table = 'kotanimanda';
     private $primary_key = 'id_kota010';
 

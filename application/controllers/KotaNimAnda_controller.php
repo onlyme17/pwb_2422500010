@@ -10,7 +10,6 @@ class KotaNimAnda_controller extends CI_Controller
         $this->load->library(array('session', 'form_validation'));
         $this->load->helper(array('url', 'form'));
 
-        // Sesuai dengan session pada Admin_auth_controller.php project asli.
         if (!$this->session->userdata('admin_login')) {
             redirect('admin/login');
         }
@@ -25,14 +24,17 @@ class KotaNimAnda_controller extends CI_Controller
     {
         if ($this->input->method(TRUE) === 'POST') {
             $this->_rules();
-            if ($this->form_validation->run()) {
-                $this->KotaNimAnda_model->insert($this->_post_data());
-                $this->session->set_flashdata('pesan', 'Data kota berhasil ditambahkan.');
-                redirect('KotaNimAnda_controller');
-                return;
+            if ($this->form_validation->run() === TRUE) {
+                if ($this->KotaNimAnda_model->insert($this->_post_data())) {
+                    $this->session->set_flashdata('pesan', 'Data kota berhasil ditambahkan.');
+                    redirect('admin/kota');
+                    return;
+                }
+                $this->session->set_flashdata('pesan_error', 'Data kota gagal ditambahkan.');
             }
         }
-        $this->_render('Tambah Data Kota', site_url('KotaNimAnda_controller/tambah'), null);
+
+        $this->_render('Tambah Data Kota', site_url('admin/kota/tambah'), null);
     }
 
     public function ubah($id = null)
@@ -50,14 +52,17 @@ class KotaNimAnda_controller extends CI_Controller
 
         if ($this->input->method(TRUE) === 'POST') {
             $this->_rules();
-            if ($this->form_validation->run()) {
-                $this->KotaNimAnda_model->update((int) $id, $this->_post_data());
-                $this->session->set_flashdata('pesan', 'Data kota berhasil diubah.');
-                redirect('KotaNimAnda_controller');
-                return;
+            if ($this->form_validation->run() === TRUE) {
+                if ($this->KotaNimAnda_model->update((int) $id, $this->_post_data())) {
+                    $this->session->set_flashdata('pesan', 'Data kota berhasil diubah.');
+                    redirect('admin/kota');
+                    return;
+                }
+                $this->session->set_flashdata('pesan_error', 'Data kota gagal diubah.');
             }
         }
-        $this->_render('Ubah Data Kota', site_url('KotaNimAnda_controller/ubah/' . (int) $id), $row);
+
+        $this->_render('Ubah Data Kota', site_url('admin/kota/ubah/' . (int) $id), $row);
     }
 
     public function hapus($id = null)
@@ -67,16 +72,19 @@ class KotaNimAnda_controller extends CI_Controller
             return;
         }
 
-        $this->KotaNimAnda_model->delete((int) $id);
-        $this->session->set_flashdata('pesan', 'Data kota berhasil dihapus.');
-        redirect('KotaNimAnda_controller');
+        if ($this->KotaNimAnda_model->delete((int) $id)) {
+            $this->session->set_flashdata('pesan', 'Data kota berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('pesan_error', 'Data kota gagal dihapus.');
+        }
+        redirect('admin/kota');
     }
 
     private function _rules()
     {
-        $this->form_validation->set_rules('nama_kota010', 'Nama Kota', 'required|trim|max_length[500');
+        $this->form_validation->set_rules('nama_kota010', 'Nama Kota', 'required|trim|max_length[50]');
         $this->form_validation->set_rules('jenis_kota010', 'Jenis Kota', 'required|in_list[Kota,Kabupaten]');
-        $this->form_validation->set_rules('provinsi010', 'Provinsi', 'required|trim|max_length[500]');
+        $this->form_validation->set_rules('provinsi010', 'Provinsi', 'required|trim');
         $this->form_validation->set_rules('status010', 'Status', 'required|in_list[Aktif,Tidak Aktif]');
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
     }
@@ -101,7 +109,7 @@ class KotaNimAnda_controller extends CI_Controller
             'row_form' => $row_form
         );
 
-        // Gunakan layout AdminLTE project asli agar sidebar tetap tampil.
+        // Ikuti layout yang sudah dipakai halaman kategori/produk project asli.
         $this->load->view('administrator/templates/header', $data);
         $this->load->view('administrator/templates/sidebar');
         $this->load->view('KotaNimAnda/index', $data);

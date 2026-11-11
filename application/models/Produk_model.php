@@ -5,19 +5,12 @@ class Produk_model extends CI_Model
 {
     private $table = "produk";
 
-    public function get_all($keyword = null)
+    public function get_all()
     {
         $this->db->select('produk.id_produk, produk.nama as pd_nama, produk.stok, 
                            produk.deskripsi, produk.harga, kategori.nama as kt_nama');
         $this->db->from($this->table);
         $this->db->join('kategori', 'kategori.id_kategori = produk.kategori_id');
-        if ($keyword !== null && $keyword !== '') {
-            $this->db->group_start()
-                ->like('produk.nama', $keyword)
-                ->or_like('produk.deskripsi', $keyword)
-                ->or_like('kategori.nama', $keyword)
-                ->group_end();
-        }
         return $this->db->get()->result_array();
     }
 

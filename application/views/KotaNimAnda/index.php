@@ -3,8 +3,17 @@
 <div class="content-wrapper">
   <section class="content-header">
     <div class="container-fluid">
-      <h1><?= html_escape($judul); ?></h1>
-      <p class="text-muted">Master Data Kota</p>
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1><?= html_escape($judul); ?></h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="<?= site_url('admin'); ?>">Dashboard</a></li>
+            <li class="breadcrumb-item active">Kota</li>
+          </ol>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -13,7 +22,16 @@
       <?php if ($this->session->flashdata('pesan')): ?>
         <div class="alert alert-success alert-dismissible">
           <?= html_escape($this->session->flashdata('pesan')); ?>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Tutup">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <?php endif; ?>
+
+      <?php if ($this->session->flashdata('pesan_error')): ?>
+        <div class="alert alert-danger alert-dismissible">
+          <?= html_escape($this->session->flashdata('pesan_error')); ?>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Tutup">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -32,9 +50,9 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="nama_kota010">Nama Kota</label>
-                <input id="nama_kota010" type="text" class="form-control" name="nama_kota010"
-                  maxlength="50" required
-                  value="<?= html_escape(set_value('nama_kota010', isset($row_form->nama_kota010) ? $row_form->nama_kota010 : '')); ?>">
+                <input type="text" id="nama_kota010" class="form-control"
+                       name="nama_kota010" maxlength="50" required
+                       value="<?= html_escape(set_value('nama_kota010', isset($row_form->nama_kota010) ? $row_form->nama_kota010 : '')); ?>">
               </div>
 
               <div class="form-group">
@@ -48,10 +66,9 @@
 
               <div class="form-group">
                 <label for="provinsi010">Provinsi</label>
-                <input id="provinsi010" type="text" class="form-control" name="provinsi010"
-                  maxlength="10" required
-                  value="<?= html_escape(set_value('provinsi010', isset($row_form->provinsi010) ? $row_form->provinsi010 : '')); ?>">
-                <small class="form-text text-muted">Maksimal 10 karakter, mengikuti ketentuan soal.</small>
+                <input type="text" id="provinsi010" class="form-control"
+                       name="provinsi010" required
+                       value="<?= html_escape(set_value('provinsi010', isset($row_form->provinsi010) ? $row_form->provinsi010 : '')); ?>">
               </div>
 
               <div class="form-group">
@@ -64,8 +81,8 @@
               </div>
             </div>
             <div class="card-footer">
-              <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-              <a href="<?= site_url('KotaNimAnda_controller'); ?>" class="btn btn-secondary">Batal</a>
+              <button type="submit" class="btn btn-primary">Simpan</button>
+              <a href="<?= site_url('admin/kota'); ?>" class="btn btn-secondary">Batal</a>
             </div>
           </form>
         </div>
@@ -74,11 +91,12 @@
           <div class="card-header">
             <h3 class="card-title">Daftar Kota</h3>
             <div class="card-tools">
-              <a href="<?= site_url('KotaNimAnda_controller/tambah'); ?>" class="btn btn-primary btn-sm">
+              <a href="<?= site_url('admin/kota/tambah'); ?>" class="btn btn-primary btn-sm">
                 <i class="fas fa-plus"></i> Tambah Kota
               </a>
             </div>
           </div>
+
           <div class="card-body table-responsive">
             <table class="table table-bordered table-striped">
               <thead>
@@ -105,10 +123,10 @@
                     </td>
                     <td>
                       <a class="btn btn-warning btn-sm"
-                         href="<?= site_url('KotaNimAnda_controller/ubah/' . $item->id_kota010); ?>">Ubah</a>
+                         href="<?= site_url('admin/kota/ubah/' . (int) $item->id_kota010); ?>">Ubah</a>
                       <a class="btn btn-danger btn-sm"
-                         href="<?= site_url('KotaNimAnda_controller/hapus/' . $item->id_kota010); ?>"
-                         onclick="return confirm('Yakin ingin menghapus data kota ini?')">Hapus</a>
+                         href="<?= site_url('admin/kota/hapus/' . (int) $item->id_kota010); ?>"
+                         onclick="return confirm('Yakin ingin menghapus data kota ini?');">Hapus</a>
                     </td>
                   </tr>
                 <?php endforeach; else: ?>
